@@ -1,0 +1,121 @@
+* {
+  box-sizing: border-box;
+}
+
+table {
+  border-spacing: 0;
+  width: 100%;
+  border: 1px solid #ddd;
+}
+
+th {
+  cursor: pointer;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 16px;
+}
+
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+#myInput {
+  background-image: url('../../assets/images/searchicon.png'); /* Add a search icon to input */
+  background-position: 10px 10px;
+  background-repeat: no-repeat;
+  background-size: 1.5rem;
+  width: 20%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myTable {
+  border-collapse: collapse; /* Collapse borders */
+  width: 100%; /* Full-width */
+  border: 1px solid #ddd; /* Add a grey border */
+  font-size: 18px; /* Increase font-size */
+}
+
+#myTable th,
+#myTable td {
+  text-align: left; /* Left-align text */
+  padding: 12px; /* Add padding */
+}
+
+#myTable tr {
+  /* Add a bottom border to all table rows */
+  border-bottom: 1px solid #ddd;
+}
+
+#myTable tr.header,
+#myTable tr:hover {
+  /* Add a grey background color to the table header and on hover */
+  background-color: #f1f9f9;
+}
+
+#topBar {
+  padding: 12px 20px 12px 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.custom-select {
+  display: inline;
+}
+.showEntries {
+  font-size: 0.9rem;
+  align-self: center;
+  justify-content: center;
+}
+.pagination {
+  display: flex;
+  justify-content: space-between;
+}
+.buttonsPage {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  border: 0;
+  background-color: unset;
+}
+
+/*Pagination buttons*/
+.buttonsPage button {
+  width: 2rem;
+  height: 2rem;
+  margin: 1px;
+  border: inherit;
+  background-color: inherit;
+}
+
+/*Previous and Next button*/
+.buttonsPage button:first-child,
+button:last-child {
+  text-align: left;
+  width: fit-content;
+  border: inherit;
+  background-color: inherit;
+}
+
+.buttonsPage button:focus {
+  background-color: gray;
+}
+
+button {
+  color: blue;
+}
+
+button.active {
+  color: black;
+}
+
+button:disabled {
+  color: black;
+}
