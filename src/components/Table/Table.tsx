@@ -1,16 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { AppState } from '../../store';
 import { createTable, filterRows } from '../../utils';
 
-type Props = {
-  rows: any[];
-  entries: number;
-  start: number;
-  search: string;
-};
-
-function Table(props: Props) {
-  const { rows, entries, start, search } = props;
+export default function Table() {
+  const data: any = useSelector<AppState>(state => state.data);
+  const { rows, entries, start, search } = data;
   let rowsToShow = rows;
   if (search) {
     rowsToShow = filterRows(rows, search);
@@ -19,12 +14,3 @@ function Table(props: Props) {
     <>{rowsToShow.length > 0 && createTable(rowsToShow, start, entries)}</>
   );
 }
-
-const mapStateToProps = (state: any) => ({
-  rows: state.data.rows,
-  entries: state.data.entries,
-  start: state.data.start,
-  search: state.data.search,
-});
-
-export default connect(mapStateToProps, {})(Table);

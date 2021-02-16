@@ -1,21 +1,17 @@
 import React from 'react';
 import Search from '../Search/Search';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 //Action
 import { setEntriesValue } from '../../actions/tableActions';
 
-type Props = {
-  setEntriesValue: (entries: number) => void;
-};
-
-function ResultsByPage(props: Props) {
-  const { setEntriesValue } = props;
+export default function ResultsByPage() {
+  const dispatch = useDispatch();
   return (
     <div id='topBar'>
       <div id='showEntries'>
         Show{' '}
         <div className='custom-select' style={{ width: '50px' }}>
-          <select onChange={e => setEntriesValue(+e.target.value)}>
+          <select onChange={e => dispatch(setEntriesValue(+e.target.value))}>
             <option value='5'>5</option>
             <option value='10'>10</option>
             <option value='20'>20</option>
@@ -29,5 +25,3 @@ function ResultsByPage(props: Props) {
     </div>
   );
 }
-
-export default connect(null, { setEntriesValue })(ResultsByPage);

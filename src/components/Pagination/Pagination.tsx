@@ -1,15 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { setStartValue } from '../../actions/tableActions';
+import { AppState } from '../../store';
 import { orderArray, filterRows } from '../../utils';
-
-type Props = {
-  rows: any[];
-  entries: number;
-  start: number;
-  setStartValue: (start: number) => void;
-  search: string;
-};
 
 const renderButtons = (
   rows: number,
@@ -82,20 +75,22 @@ const listButtons = (
   ));
 };
 
-function Pagination(props: Props) {
-  const { rows, entries, start, setStartValue, search } = props;
+export default function Pagination() {
+  const data: any = useSelector<AppState>(state => state.data);
+  const { rows, entries, start, search } = data;
+  const dispatch = useDispatch();
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const clickedPageNumber = Number(e.currentTarget.innerText);
-    setStartValue((clickedPageNumber - 1) * entries);
+    dispatch(setStartValue((clickedPageNumber - 1) * entries));
   };
 
   const handlePrevious = () => {
-    setStartValue(start - entries);
+    dispatch(setStartValue(start - entries));
   };
 
   const handleNext = () => {
-    setStartValue(start + entries);
+    dispatch(setStartValue(start + entries));
   };
   let rowsToShow = rows;
   if (search) {
@@ -121,12 +116,3 @@ function Pagination(props: Props) {
     </div>
   );
 }
-
-const mapStateToProps = (state: any) => ({
-  rows: state.data.rows,
-  entries: state.data.entries,
-  start: state.data.start,
-  search: state.data.search,
-});
-
-export default connect(mapStateToProps, { setStartValue })(Pagination);

@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+//Types
+import { AppState } from '../../store';
 //Actions
 import { getRows } from '../../actions/tableActions';
 import Pagination from '../Pagination/Pagination';
@@ -7,19 +9,15 @@ import ResultsByPage from '../ResultsByPage/ResultsByPage';
 import Table from '../Table/Table';
 import './TableLayout.css';
 
-type Props = {
-  error: string;
-  getRows: () => void;
-};
-
-function TableLayout(props: Props) {
-  const { getRows, error } = props;
+export default function TableLayout() {
+  const error: any = useSelector<AppState>(state => state.data.error);
+  const dispatch = useDispatch();
   useEffect(() => {
     async function fetchData() {
-      await getRows();
+      await dispatch(getRows());
     }
     fetchData();
-  }, [getRows]);
+  }, [dispatch]);
   return (
     <>
       {error ? (
@@ -34,12 +32,3 @@ function TableLayout(props: Props) {
     </>
   );
 }
-const mapDispatchToProps = (dispatch: any) => ({
-  getRows: () => dispatch(getRows()),
-});
-
-const mapStateToProps = (state: any) => ({
-  error: state.data.error,
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TableLayout);
