@@ -13,7 +13,7 @@ import {
 //API
 import * as API from '../api/api';
 
-// action creators
+//#region  action creators
 const loadRowsAction = (): LoadRows => ({
   type: TableActions.LOAD_ROWS,
 });
@@ -42,6 +42,7 @@ const startAction = (start: number): SetStart => ({
   type: TableActions.SET_START,
   payload: start,
 });
+//#endregion
 
 export const setEntriesValue = (entries: number) => (
   dispatch: Dispatch<any>
