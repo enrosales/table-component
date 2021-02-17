@@ -1,23 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { setSearchingValue } from '../../actions/tableActions';
 
-type Props = {
-  setSearchingValue: (search: string) => void;
-};
-
-function Search(props: Props) {
+export default function Search() {
   const [search, setSearch] = useState('');
   const input = useRef<HTMLInputElement | null>(null);
-  const { setSearchingValue } = props;
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setTimeout(() => {
       if (search === input.current?.value) {
-        setSearchingValue(search);
+        dispatch(setSearchingValue(search));
       }
     }, 1000);
-  }, [search]);
+  }, [search, dispatch]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
@@ -34,5 +30,3 @@ function Search(props: Props) {
     />
   );
 }
-
-export default connect(null, { setSearchingValue })(Search);

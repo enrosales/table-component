@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { AppState } from '../../store';
 import { createTable, filterRows } from '../../utils';
 

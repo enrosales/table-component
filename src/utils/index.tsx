@@ -104,8 +104,6 @@ export function createTable(rows: any[], start: number, entries: number) {
   );
 }
 
-export const orderArray = (arr: number[]) => arr.sort((a, b) => a - b);
-
 export const filterRows = (rows: any[], search: string) => {
   return rows.filter(row => {
     const keys = Object.keys(row);
@@ -113,3 +111,6 @@ export const filterRows = (rows: any[], search: string) => {
     return String(row[firstKey].toLowerCase()).includes(search.toLowerCase());
   });
 };
+//#region  order Array Methods
+export const orderArray = (arr: number[]) => arr.sort((a, b) => a - b);
+//#endregion
