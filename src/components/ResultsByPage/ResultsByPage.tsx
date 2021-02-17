@@ -4,6 +4,14 @@ import { useDispatch } from 'react-redux';
 //Action
 import { setEntriesValue } from '../../actions/tableActions';
 
+const OPTIONS = [
+  { id: 1, value: 5 },
+  { id: 2, value: 10 },
+  { id: 3, value: 20 },
+  { id: 4, value: 50 },
+  { id: 5, value: 100 },
+];
+
 export default function ResultsByPage() {
   const dispatch = useDispatch();
   return (
@@ -12,11 +20,10 @@ export default function ResultsByPage() {
         Show{' '}
         <div className='custom-select' style={{ width: '50px' }}>
           <select onChange={e => dispatch(setEntriesValue(+e.target.value))}>
-            <option value='5'>5</option>
-            <option value='10'>10</option>
-            <option value='20'>20</option>
-            <option value='50'>50</option>
-            <option value='100'>100</option>
+            {OPTIONS.map(option => {
+              const { value } = option;
+              return <option value={value}>{value}</option>;
+            })}
           </select>
         </div>{' '}
         entries

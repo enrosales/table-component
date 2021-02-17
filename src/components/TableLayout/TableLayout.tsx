@@ -6,7 +6,7 @@ import { AppState } from '../../store';
 import { getRows } from '../../actions/tableActions';
 import Pagination from '../Pagination/Pagination';
 import ResultsByPage from '../ResultsByPage/ResultsByPage';
-import Table from '../Table/Table';
+import Table from 'components/Table/Table';
 import './TableLayout.css';
 
 export default function TableLayout() {
