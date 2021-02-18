@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { setSearchingValue } from '../../actions/tableActions';
+import { setSearchingValue } from 'actions/tableActions';
 
 export default function Search() {
   const [search, setSearch] = useState('');

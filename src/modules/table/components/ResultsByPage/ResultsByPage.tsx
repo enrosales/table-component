@@ -1,8 +1,8 @@
 import React from 'react';
-import Search from '../Search/Search';
 import { useDispatch } from 'react-redux';
+import Search from 'modules/table/components/Search/Search';
 //Action
-import { setEntriesValue } from '../../actions/tableActions';
+import { setEntriesValue } from 'actions/tableActions';
 
 const OPTIONS = [
   { id: 1, value: 5 },
@@ -22,7 +22,11 @@ export default function ResultsByPage() {
           <select onChange={e => dispatch(setEntriesValue(+e.target.value))}>
             {OPTIONS.map(option => {
               const { value } = option;
-              return <option value={value}>{value}</option>;
+              return (
+                <option key={value} value={value}>
+                  {value}
+                </option>
+              );
             })}
           </select>
         </div>{' '}

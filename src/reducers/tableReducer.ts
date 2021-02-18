@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { TableActions } from '../types/tableTypes';
+import { TableActions } from 'types/tableTypes';
 
 /*
 {

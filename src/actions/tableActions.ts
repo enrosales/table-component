@@ -2,31 +2,13 @@ import { Dispatch } from 'redux';
 //Types
 import {
   TableActions,
-  LoadRows,
   RowsLoaded,
-  ErrorLoadingRows,
   SetEntries,
   SetSearching,
   SetStart,
-} from '../types/tableTypes';
-
-//API
-import * as API from '../api/api';
+} from 'types/tableTypes';
 
 //#region  action creators
-const loadRowsAction = (): LoadRows => ({
-  type: TableActions.LOAD_ROWS,
-});
-
-const rowsLoadedAction = (rows: any[]): RowsLoaded => ({
-  type: TableActions.ROWS_LOADED,
-  payload: rows,
-});
-
-const errorLoadingRowsAction = (error: string): ErrorLoadingRows => ({
-  type: TableActions.ERROR_LOADING_ROWS,
-  payload: error,
-});
 
 const entriesAction = (entries: number): SetEntries => ({
   type: TableActions.SET_ENTRIES,
@@ -60,14 +42,7 @@ export const setStartValue = (start: number) => (dispatch: Dispatch<any>) => {
   dispatch(startAction(start));
 };
 
-// Thunk async actions
-export const getRows = () => async (dispatch: Dispatch<any>): Promise<void> => {
-  try {
-    dispatch(loadRowsAction());
-    const { data: rows } = await API.getRows();
-    dispatch(rowsLoadedAction(rows));
-    dispatch(errorLoadingRowsAction(''));
-  } catch (error) {
-    dispatch(errorLoadingRowsAction(error.message));
-  }
-};
+export const setRows = (rows: any[]): RowsLoaded => ({
+  type: TableActions.ROWS_LOADED,
+  payload: rows,
+});

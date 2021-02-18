@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setStartValue } from '../../actions/tableActions';
-import { AppState } from '../../store';
-import { orderArray, filterRows } from '../../utils';
+import { setStartValue } from 'actions/tableActions';
+import { AppState } from 'store';
+import { orderArray, filterRows } from 'helpers';
 
 const renderButtons = (
   rows: number,

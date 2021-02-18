@@ -1,10 +1,11 @@
 import React from 'react';
-import TableLayout from './components/TableLayout/TableLayout';
+import TableLayout from 'modules/table/components/TableLayout';
+import useFetch from 'modules/common/hooks/useFetch';
 
 function App() {
   return (
     <div className='App'>
-      <TableLayout />
+      <TableLayout {...useFetch('http://localhost:3005/data')} />
     </div>
   );
 }

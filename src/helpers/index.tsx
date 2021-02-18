@@ -1,5 +1,56 @@
 import React from 'react';
 
+//#region Table Creators Methods
+function createTableHeaders(rows: any[]) {
+  return Object.keys(rows[0]).map((item, index) => (
+    <th onClick={() => sortTable(index)} key={item}>
+      {item}
+    </th>
+  ));
+}
+
+function createTableRow(row: any) {
+  return Object.keys(row).map(key => <td key={key}>{row[key]}</td>);
+}
+
+//Example of one row
+//{name: "Eduardo", position: "Programador", office: "Cerro", age: 32, startDate: "2011/11/28"}
+function createTableBody(rows: any[]) {
+  return rows.map((row, index) => {
+    const tdValues = createTableRow(row);
+    return <tr key={index}>{tdValues}</tr>;
+  });
+}
+
+export function createTable(rows: any[], start: number, entries: number) {
+  const newRows = rows.slice(start, start + entries);
+  return (
+    newRows.length > 0 && (
+      <>
+        <table id='myTable'>
+          <thead>
+            <tr>{createTableHeaders(newRows)}</tr>
+          </thead>
+          <tbody>{createTableBody(newRows)}</tbody>
+          <tfoot>
+            <tr>{createTableHeaders(newRows)}</tr>
+          </tfoot>
+        </table>
+      </>
+    )
+  );
+}
+//#endregion
+
+//#region table operations
+export const filterRows = (rows: any[], search: string) => {
+  return rows.filter(row => {
+    const keys = Object.keys(row);
+    const firstKey = keys[0];
+    return String(row[firstKey].toLowerCase()).includes(search.toLowerCase());
+  });
+};
+
 function sortTable(columnIndex: number) {
   var table,
     rows,
@@ -63,54 +114,8 @@ function sortTable(columnIndex: number) {
     }
   }
 }
+//#endregion
 
-function createTableHeaders(rows: any[]) {
-  return Object.keys(rows[0]).map((item, index) => (
-    <th onClick={() => sortTable(index)} key={item}>
-      {item}
-    </th>
-  ));
-}
-
-function createTableRow(row: any) {
-  return Object.keys(row).map(key => <td key={key}>{row[key]}</td>);
-}
-
-//Example of one row
-//{name: "Eduardo", position: "Programador", office: "Cerro", age: 32, startDate: "2011/11/28"}
-function createTableBody(rows: any[]) {
-  return rows.map((row, index) => {
-    const tdValues = createTableRow(row);
-    return <tr key={index}>{tdValues}</tr>;
-  });
-}
-
-export function createTable(rows: any[], start: number, entries: number) {
-  const newRows = rows.slice(start, start + entries);
-  return (
-    newRows.length > 0 && (
-      <>
-        <table id='myTable'>
-          <thead>
-            <tr>{createTableHeaders(newRows)}</tr>
-          </thead>
-          <tbody>{createTableBody(newRows)}</tbody>
-          <tfoot>
-            <tr>{createTableHeaders(newRows)}</tr>
-          </tfoot>
-        </table>
-      </>
-    )
-  );
-}
-
-export const filterRows = (rows: any[], search: string) => {
-  return rows.filter(row => {
-    const keys = Object.keys(row);
-    const firstKey = keys[0];
-    return String(row[firstKey].toLowerCase()).includes(search.toLowerCase());
-  });
-};
 //#region  order Array Methods
 export const orderArray = (arr: number[]) => arr.sort((a, b) => a - b);
 //#endregion
