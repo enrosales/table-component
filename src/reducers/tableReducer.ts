@@ -4,26 +4,15 @@ import { TableActions } from 'types/tableTypes';
 /*
 {
   rows: [],
-  error: ''
   entries: 10,
   search: '',
   start: 0,
-  activePage: 1,
 }
 */
 
 function rowsReducer(state = [], action: any): any {
   switch (action.type) {
     case TableActions.ROWS_LOADED:
-      return action.payload;
-    default:
-      return state;
-  }
-}
-
-export function errorReducer(state = '', action: any): any {
-  switch (action.type) {
-    case TableActions.ERROR_LOADING_ROWS:
       return action.payload;
     default:
       return state;
@@ -59,7 +48,6 @@ export function startReducer(state = 0, action: any): any {
 
 const appReducer = combineReducers({
   rows: rowsReducer,
-  error: errorReducer,
   entries: entriesReducer,
   search: searchReducer,
   start: startReducer,

@@ -44,6 +44,7 @@ export function createTable(rows: any[], start: number, entries: number) {
 
 //#region table operations
 export const filterRows = (rows: any[], search: string) => {
+  if (!search) return rows;
   return rows.filter(row => {
     const keys = Object.keys(row);
     const firstKey = keys[0];
@@ -114,6 +115,66 @@ function sortTable(columnIndex: number) {
     }
   }
 }
+//#endregion
+
+//#region Pagination methods
+//Method for render the buttons of the pagination table
+export const renderButtons = (
+  rows: number,
+  entries: number,
+  start: number,
+  handleClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+) => {
+  const numberOfButtonsToShow = 10;
+  const activePage = start / entries + 1;
+  const totalButtons = Math.ceil(rows / entries);
+  //can write all the buttons at the first time
+  if (totalButtons < numberOfButtonsToShow) {
+    const buttonsNames = [];
+    for (let index = 1; index <= totalButtons; index++) {
+      buttonsNames.push(index);
+    }
+    return listButtons(buttonsNames, handleClick, activePage);
+  } else {
+    const buttonsNames: number[] = [];
+    buttonsNames.push(activePage);
+    let leftCounter = 1;
+    //trying to write 5 buttons left to the activePage
+    while (activePage - leftCounter > 0 && buttonsNames.length <= 5) {
+      buttonsNames.push(activePage - leftCounter++);
+    }
+    let rigthCounter = 1;
+    //trying to write buttons right to the activePage
+    while (
+      buttonsNames.length < 10 &&
+      activePage + rigthCounter <= totalButtons
+    ) {
+      buttonsNames.push(activePage + rigthCounter++);
+    }
+    while (buttonsNames.length < 10) {
+      /* If no more right buttons and can have more than 5 buttons left */
+      buttonsNames.push(activePage - leftCounter++);
+    }
+    orderArray(buttonsNames);
+    return listButtons(buttonsNames, handleClick, activePage);
+  }
+};
+
+const listButtons = (
+  buttonsNames: number[],
+  handleClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
+  activePage: number
+) => {
+  return buttonsNames.map(btnName => (
+    <button
+      className={activePage === btnName ? 'active' : ''}
+      key={btnName}
+      onClick={e => handleClick(e)}
+    >
+      {btnName}
+    </button>
+  ));
+};
 //#endregion
 
 //#region  order Array Methods

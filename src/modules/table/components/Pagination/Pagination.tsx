@@ -1,49 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setStartValue } from 'actions/tableActions';
 import { AppState } from 'store';
-import { orderArray, filterRows } from 'helpers';
-
-const renderButtons = (
-  rows: number,
-  entries: number,
-  start: number,
-  handleClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
-) => {
-  const numberOfButtonsToShow = 10;
-  const activePage = start / entries + 1;
-  const totalButtons = Math.ceil(rows / entries);
-  //can write all the buttons at the first time
-  if (totalButtons < numberOfButtonsToShow) {
-    const buttonsNames = [];
-    for (let index = 1; index <= totalButtons; index++) {
-      buttonsNames.push(index);
-    }
-    return listButtons(buttonsNames, handleClick, activePage);
-  } else {
-    const buttonsNames: number[] = [];
-    buttonsNames.push(activePage);
-    let leftCounter = 1;
-    //trying to write 5 buttons left to the activePage
-    while (activePage - leftCounter > 0 && buttonsNames.length <= 5) {
-      buttonsNames.push(activePage - leftCounter++);
-    }
-    let rigthCounter = 1;
-    //trying to write buttons right to the activePage
-    while (
-      buttonsNames.length < 10 &&
-      activePage + rigthCounter <= totalButtons
-    ) {
-      buttonsNames.push(activePage + rigthCounter++);
-    }
-    while (buttonsNames.length < 10) {
-      /* If no more right buttons and can have more than 5 buttons left */
-      buttonsNames.push(activePage - leftCounter++);
-    }
-    orderArray(buttonsNames);
-    return listButtons(buttonsNames, handleClick, activePage);
-  }
-};
+import { filterRows, renderButtons } from 'helpers';
 
 const resultsIndicator = (
   totalRows: number,
@@ -59,26 +18,15 @@ const resultsIndicator = (
   );
 };
 
-const listButtons = (
-  buttonsNames: number[],
-  handleClick: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
-  activePage: number
-) => {
-  return buttonsNames.map(btnName => (
-    <button
-      className={activePage === btnName ? 'active' : ''}
-      key={btnName}
-      onClick={e => handleClick(e)}
-    >
-      {btnName}
-    </button>
-  ));
-};
-
 export default function Pagination() {
   const data: any = useSelector<AppState>(state => state.data);
   const { rows, entries, start, search } = data;
+  const [rowsToShow, setRowsToShow] = useState<any[]>([]);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setRowsToShow(filterRows(rows, search));
+  }, [rows, search]);
 
   const handleClick = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     const clickedPageNumber = Number(e.currentTarget.innerText);
@@ -92,10 +40,7 @@ export default function Pagination() {
   const handleNext = () => {
     dispatch(setStartValue(start + entries));
   };
-  let rowsToShow = rows;
-  if (search) {
-    rowsToShow = filterRows(rows, search);
-  }
+
   return (
     <div className='pagination'>
       <div className='resultsIndicator'>

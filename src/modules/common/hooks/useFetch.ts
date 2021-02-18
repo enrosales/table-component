@@ -1,24 +1,23 @@
 import { useState, useEffect } from 'react';
 
-//API
-import * as API from 'api/api';
+export type UseFetch<T> = {
+  loading: boolean;
+  data?: T | null;
+  error: string;
+};
 
-export default function useFetch(url: string) {
-  const [loading, setLoading] = useState<boolean>(true);
-  const [data, setData] = useState<any[]>([]);
-  const [error, setError] = useState<string | null>(null);
+export default function useFetch<T>(url: string): UseFetch<T> {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [data, setData] = useState<T | null>(null);
+  const [error, setError] = useState<string>('');
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const { data } = await API.getRows(url);
-        setData(data);
-      } catch (error) {
-        setError(error.message);
-      }
-      setLoading(false);
-    }
-    fetchData();
+    setLoading(true);
+    fetch(url)
+      .then(response => response.json())
+      .then(data => setData(data))
+      .finally(() => setLoading(false))
+      .catch(error => setError(error));
   }, [url]);
 
   return {

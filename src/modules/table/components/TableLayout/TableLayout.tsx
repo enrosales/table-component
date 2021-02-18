@@ -8,13 +8,17 @@ import Loading from 'modules/common/components/Loading';
 import Error from 'modules/common/components/Error';
 import './TableLayout.css';
 
-type Props = {
+export type TableLayoutProps = {
   loading: boolean;
-  data: any[];
+  data?: any;
   error: string | null;
 };
 
-export default function TableLayout({ loading, data, error }: Props) {
+export default function TableLayout({
+  loading,
+  data,
+  error,
+}: TableLayoutProps) {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(setRows(data));
