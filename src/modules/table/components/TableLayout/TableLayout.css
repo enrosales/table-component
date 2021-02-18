@@ -23,7 +23,7 @@ tr:nth-child(even) {
 }
 
 #myInput {
-  background-image: url('/src/assets/images/searchicon.png'); /* Add a search icon to input */
+  background-image: url('../../../../assets/images/searchicon.png'); /* Add a search icon to input */
   background-position: 10px 10px;
   background-repeat: no-repeat;
   background-size: 1.5rem;
